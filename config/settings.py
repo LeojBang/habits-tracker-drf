@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
 
@@ -215,3 +216,9 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 # Переменная с флагом False запрещает заходить с других доменов
 CORS_ALLOW_ALL_ORIGINS = False
+
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:'
+    }
