@@ -84,7 +84,7 @@ jobs:
             docker rm habits-tracker-drf || true
             docker run -d \
               --name habits-tracker-drf \
-              --env-file /home/${{ secrets.SSH_USER }}/.env \
+#              --env-file /home/${{ secrets.SSH_USER }}/.env \
               -p 80:8000 \
               ${{ secrets.DOCKER_HUB_USERNAME }}/habits-tracker-drf:${{ github.sha }}
           EOF
