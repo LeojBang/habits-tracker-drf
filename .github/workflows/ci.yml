@@ -75,10 +75,10 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-            cd /home/${{ secrets.SSH_USER }}/habits-tracker-drf
-            docker compose down
-            docker compose pull
-            docker compose build --no-cache
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "
+            cd /home/${{ secrets.SSH_USER }}/habits-tracker-drf &&
+            docker compose down &&
+            docker compose pull &&
+            docker compose build --no-cache &&
             docker compose up -d
-          EOF
+          "
