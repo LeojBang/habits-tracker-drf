@@ -4,9 +4,15 @@ FROM python:3.12
 # Устанавливаем рабочую директорию в контейнере
 WORKDIR /app
 
-# Копируем файл с зависимостями и устанавливаем их
+# Обновляем список пакетов
+RUN apt-get update \
+    && apt-get install -y gcc libpq-dev \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Копируем файл с зависимостями и устанавливаем их без сохраненния кеша
 COPY requirements.txt ./
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Копируем остальные файлы проекта в контейнер
 COPY . .

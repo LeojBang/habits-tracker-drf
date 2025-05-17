@@ -76,11 +76,9 @@ jobs:
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/habits-tracker-drf:${{ github.sha }}
-          docker stop habits-tracker-drf || true
-          docker rm habits-tracker-drf || true
-          docker run -d \
-           --name habits-tracker-drf \
-          -p 80:8000 \
-          ${{ secrets.DOCKER_HUB_USERNAME }}/habits-tracker-drf:${{ github.sha }}
+          cd /home/${{ secrets.SSH_USER }}/habits-tracker-drf
+          docker-compose down
+          docker-compose pull
+          docker-compose build --no-cache
+          docker-compose up -d
           EOF
